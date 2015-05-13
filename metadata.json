@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Tyler Yahn <codingalias@gmail.com>",
   "summary": "Puppet module that handles user account management with support for virtual users and hiera.",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "https://github.com/MrAlias/users.git",
   "project_page": "https://github.com/MrAlias/users",
   "issues_url": "https://github.com/MrAlias/users/issues",
