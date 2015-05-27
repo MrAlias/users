@@ -179,6 +179,10 @@ define users::account (
     ensure_packages($packages, {'before' => User[$name]})
   }
 
+  if $groups {
+    ensure_resource('group', $groups, {'before' => User[$name]})
+  }
+
   user { $name:
     ensure               => $ensure,
     allowdupe            => $allowdupe,
