@@ -1,6 +1,6 @@
 {
   "name": "MrAlias-users",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Tyler Yahn <codingalias@gmail.com>",
   "summary": "Puppet module that handles user account management with support for virtual users and hiera.",
   "license": "Apache-2.0",

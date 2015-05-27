@@ -180,7 +180,10 @@ define users::account (
   }
 
   if $groups {
-    ensure_resource('group', $groups, {'before' => User[$name]})
+    ensure_resource('group', $groups)
+    $Groups = Group[$groups]
+  } else {
+    $Groups = undef
   }
 
   user { $name:
@@ -216,6 +219,7 @@ define users::account (
     shell                => $shell,
     system               => $system,
     uid                  => $uid,
+    require              => $Groups,
   }
 
   # Create the user home directory if specified and told to.
