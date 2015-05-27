@@ -173,7 +173,12 @@ define users::account (
   $authorized_keys      = undef,
   $ssh_key_pair         = undef,
   $config_files         = undef,
+  $packages             = [],
 ) {
+  if $packages {
+    ensure_packages($packages, {'before' => User[$name]})
+  }
+
   user { $name:
     ensure               => $ensure,
     allowdupe            => $allowdupe,
