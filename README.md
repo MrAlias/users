@@ -299,6 +299,11 @@ Creates a customized user account that expands upon the built-in puppet `user` t
 
    Hash of all the account config files to create and manage.
 
+##### `packages`
+
+  Array of all user needed packages to ensure are installed.
+
+
 #### users::ssh_key_pair
 
 Creates SSH keys for authentication.

@@ -133,6 +133,9 @@
 # [*config_files*]
 #   Hash of all the account config files to create and manage.
 #
+# [*packages*]
+#   Array of all user needed packages to ensure are installed.
+#
 # === Authors
 #
 # Tyler Yahn <codingalias@gmail.com>
