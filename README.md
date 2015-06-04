@@ -352,6 +352,4 @@ Creates SSH keys for authentication.
 
 ## Limitations
 
-So far this module has only been tested on Debian based systems.
-
-That's not to say that it won't work on others, but until the project matures and is tested on multiple platforms no guarantees are made.
+This module has only been tested on Debian and CentOS.
