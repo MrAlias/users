@@ -57,7 +57,7 @@ users::account { 'bob':
 If you want to create multiple user accounts, you can supply a hash with all the values:
 
 ```puppet
-class { 'users::virtual':
+class { 'users':
   hash => {
     'bob'   => { 'ensure' => 'present' },
     'sandy' => { 'ensure' => 'present' },
