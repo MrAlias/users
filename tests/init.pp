@@ -1,5 +1,8 @@
 class { 'users':
-  hash  => {
-    bob => { 'ensure' => 'present', 'uid' => '10001' },
+  hash => {
+    bob => {
+    'ensure' => 'present',
+    'uid'    => '10001',
+    },
   },
 }
