@@ -304,7 +304,7 @@ Creates a customized user account that expands upon the built-in puppet `user` t
   Array of all user needed packages to ensure are installed.
 
 
-#### users::ssh_key_pair
+#### users::ssh\_key\_pair
 
 Creates SSH keys for authentication.
 
