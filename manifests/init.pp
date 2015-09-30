@@ -37,7 +37,7 @@
 # Tyler Yahn <codingalias@gmail.com>
 #
 class users (
-  $hash = hiera_hash("${module_name}::hash", undef),
+  $hash = hiera_hash("${module_name}::hash", {}),
 ) {
   validate_hash($hash)
   create_resources("${module_name}::account", $hash)
