@@ -5,6 +5,8 @@ addon:
   apt:
     packages:
       - build-essential
+notifications:
+  email: false
 script:
   - bundle exec rake validate
   - bundle exec rake lint
