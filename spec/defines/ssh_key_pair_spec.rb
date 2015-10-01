@@ -51,18 +51,20 @@ describe 'users::ssh_key_pair', :type => 'define' do
     end
 
     it { should compile.and_raise_error(/You cannot specify more than one of content, source, target/) }
+    it { should contain_file('/home/bob/.ssh/Bobs test key') }
   end
 
   context 'fail if both public_content and public_source are passed' do
     let(:title) { 'Bobs test key' }
     let(:params) do
       {
-        :user            => 'bob',
+        :user           => 'bob',
         :public_content => 'test_public_content',
         :public_source  => '/test_public_file',
       }
     end
 
     it { should compile.and_raise_error(/You cannot specify more than one of content, source, target/) }
+    it { should contain_file('/home/bob/.ssh/Bobs test key.pub') }
   end
 end
