@@ -43,4 +43,69 @@ describe 'users::account', :type => 'define' do
       :ensure => 'absent',
     }) }
   end
+
+  context 'user packages are ensured to be installed' do
+    let(:title) { 'alice' }
+    let(:params) {
+      {
+        :packages  => ['tmux'],
+      }
+    }
+
+    it { should contain_package('tmux').with_ensure('present') }
+  end
+
+  context 'authorized keys are correctly setup' do
+    let(:title) { 'alice' }
+    let(:params) {
+      {
+        :authorized_keys  => {
+          'main' => {
+            'type' => 'rsa',
+            'key'  => 'ABC',
+          }
+        }
+      }
+    }
+
+    it { should contain_ssh_authorized_key('main').with({
+      :user => 'alice',
+      :type => 'rsa',
+      :key  => 'ABC',
+    }) }
+  end
+
+  context 'ssh keypairs are correctly installed' do
+    let(:title) { 'alice' }
+    let(:params) {
+      {
+        :ssh_key_pair => {
+          'test' => {
+            'public_content'  => 'public content',
+            'private_content' => 'private content',
+          }
+        }
+      }
+    }
+
+    it { should contain_users__ssh_key_pair('test') }
+    it { should contain_file('/home/alice/.ssh/') }
+    it { should contain_file('/home/alice/.ssh/test.pub') }
+    it { should contain_file('/home/alice/.ssh/test') }
+  end
+
+  context 'config files are correctly installed' do
+    let(:title) { 'alice' }
+    let(:params) {
+      {
+        :config_files => {
+          '/home/alice/.bashrc' => {
+            'content' => 'Bashrc content'
+          }
+        }
+      }
+    }
+
+    it { should contain_file('/home/alice/.bashrc').with_content('Bashrc content') }
+  end
 end
