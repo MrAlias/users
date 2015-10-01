@@ -41,7 +41,7 @@
 # Tyler Yahn <codingalias@gmail.com>
 #
 class users::virtual (
-  $hash = hiera_hash("${module_name}::virtual::hash", undef),
+  $hash = hiera_hash("${module_name}::virtual::hash", {}),
 ) {
   validate_hash($hash)
   create_resources("@${module_name}::account", $hash)
