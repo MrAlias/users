@@ -227,8 +227,13 @@ define users::account (
 
   # Create the user home directory if specified and told to.
   if ($home and $managehome) {
+    $home_ensure = $ensure ? {
+      'absent' => 'absent',
+      default  => 'directory'
+    }
+
     $home_attributes = {
-      'ensure'  => 'directory',
+      'ensure'  => $home_ensure,
       'mode'    => '0755',
       'owner'   => $name,
       'group'   => $gid,
