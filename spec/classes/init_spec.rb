@@ -19,8 +19,8 @@ describe 'users', :type => 'class' do
     it { should compile.with_all_deps }
     it { should contain_class('users') }
     it { should contain_file('/home/bob') }
-    it { should contain_users__account('alice').with({:ensure => 'absent'}) }
-    it { should contain_users__account('bob').with({:ensure => 'present'}) }
+    it { should contain_users__account('alice').with_ensure('absent') }
+    it { should contain_users__account('bob').with_ensure('present') }
   end
 
   context 'with bad parameter for hash' do
