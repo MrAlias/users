@@ -1,10 +1,10 @@
 ---
 language: ruby
-sudo: false
-addon:
-  apt:
-    packages:
-      - build-essential
+sudo: required
+services: docker
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y build-essential
 notifications:
   email: false
 script:
@@ -33,3 +33,6 @@ matrix:
       env: PUPPET_VERSION="~> 4.0"
     - rvm: ruby-head
       env: PUPPET_VERSION="~> 4.0"
+    - rvm: 2.1.7
+      env: BEAKER_set="debian-8-x86_64-docker"
+      script: bundle exec rake beaker
