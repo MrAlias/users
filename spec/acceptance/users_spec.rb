@@ -3,9 +3,11 @@ require 'spec_helper_acceptance'
 pp = <<-EOS
 class { 'users':
   hash => {
-    bob => {
+    alice => {
+    'ensure' => 'absent',
+    },
+    bob   => {
     'ensure' => 'present',
-    'uid'    => '10001',
     },
   },
 }
