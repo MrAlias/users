@@ -7,3 +7,7 @@ gem 'puppet-lint', '>= 1.0.0'
 gem 'facter', '>= 1.7.0'
 gem 'metadata-json-lint', '>= 0.0.6'
 gem 'beaker-rspec', '>= 5.2.0', :require => false
+
+if RUBY_VERSION < '2.0.0'
+  gem 'fog-powerdns', '< 0.1.1', :require => false
+end
