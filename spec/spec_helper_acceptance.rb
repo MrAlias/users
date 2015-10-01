@@ -4,16 +4,11 @@ require 'beaker-rspec'
 UNSUPPORTED_PLATFORMS = []
 
 hosts.each do |host|
-  install_package(host, 'locales')
-
   create_remote_file host, '/etc/locale.gen', 'en_US.UTF-8 UTF-8'
   shell 'locale-gen'
   host.add_env_var('LANG', 'en_US.UTF-8')
   host.add_env_var('LANGUAGE', 'en_US.UTF-8')
   host.add_env_var('LC_ALL', 'en_US.UTF-8')
-
-  install_package(host, 'wget')
-  install_package(host, 'rsync')
 
   on host, install_puppet
   on host, puppet('module install puppetlabs-stdlib -v 4.5.1')
