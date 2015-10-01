@@ -262,7 +262,7 @@ define users::account (
       require => User[$name],
     }
 
-    create_resources(ssh_key_pair, $ssh_key_pair, $ssh_key_pair_defaults)
+    create_resources(users::ssh_key_pair, $ssh_key_pair, $ssh_key_pair_defaults)
   }
 
   if $config_files {
