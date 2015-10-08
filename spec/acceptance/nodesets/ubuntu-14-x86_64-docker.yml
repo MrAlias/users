@@ -4,7 +4,7 @@ HOSTS:
     default_apply_opts:
       order: random
       strict_variables:
-    platform: ubuntu-14-amd64
+    platform: ubuntu-14.04-amd64
     hypervisor : docker
     image: ubuntu:14.04
     docker_preserve_image: true
