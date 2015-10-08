@@ -182,11 +182,27 @@ define users::account (
     ensure_packages($packages, {'before' => User[$name]})
   }
 
-  if $groups {
-    ensure_resource('group', $groups)
-    $_groups = Group[$groups]
-  } else {
-    $_groups = undef
+  case $ensure {
+    'present': {
+      $home_ensure = 'directory'
+      Group { before => User[$name] }
+    }
+    'absent': {
+      $home_ensure = 'absent'
+      Group { require => User[$name] }
+    }
+    default: { fail("Invalid value for ensure: ${ensure}") }
+  }
+
+  if !defined(Group[$name]) {
+    group { $name:
+      ensure => $ensure,
+      gid    => $gid,
+    }
+  }
+
+  if $groups and $ensure == 'present' {
+    ensure_resource('group', $groups, {ensure => 'present'})
   }
 
   user { $name:
@@ -222,16 +238,10 @@ define users::account (
     shell                => $shell,
     system               => $system,
     uid                  => $uid,
-    require              => $_groups,
   }
 
   # Create the user home directory if specified and told to.
   if ($home and $managehome) {
-    $home_ensure = $ensure ? {
-      'absent' => 'absent',
-      default  => 'directory'
-    }
-
     $home_attributes = {
       'ensure'  => $home_ensure,
       'mode'    => '0755',
