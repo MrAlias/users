@@ -1,0 +1,8 @@
+HOSTS:
+  ubuntu-12-x86:
+    platform: ubuntu-12.04-amd64
+    hypervisor: vagrant
+    box: puppetlabs/ubuntu-12.04-64-nocm
+CONFIG:
+  type: foss
+  log_level: debug
