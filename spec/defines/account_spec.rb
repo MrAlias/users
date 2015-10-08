@@ -26,6 +26,41 @@ describe 'users::account', :type => 'define' do
     }).that_requires('User[alice]') }
   end
 
+  context 'removes groups when supposed to' do
+    let(:title) { 'alice' }
+    let(:params) {
+      {
+        :ensure => 'absent',
+        :gid    => 12345,
+      }
+    }
+
+    it { should contain_group('alice').with({
+      :ensure => 'absent',
+      :gid    => 12345,
+    }).that_requires('User[alice]') }
+  end
+
+  context 'creates groups when supposed to' do
+    let(:title) { 'alice' }
+    let(:params) {
+      {
+        :ensure => 'present',
+        :gid    => 12345,
+        :groups => ['admin', 'sudo'],
+      }
+    }
+
+    it { should contain_group('admin').with_ensure('present').that_comes_before('User[alice]') }
+
+    it { should contain_group('sudo').with_ensure('present').that_comes_before('User[alice]') }
+
+    it { should contain_group('alice').with({
+      :ensure => 'present',
+      :gid    => 12345,
+    }).that_comes_before('User[alice]') }
+  end
+
   context 'setting ensure to absent removes user correctly' do
     let(:title) { 'alice' }
     let(:params) {
