@@ -1,0 +1,11 @@
+---
+HOSTS:
+  centos-6-x86:
+    platform: el-6-x86_64
+    hypervisor : docker
+    image: centos:6
+    docker_image_commands:
+      - 'yum install -y locales rsync wget tar'
+CONFIG:
+  type: foss
+  log_level: debug

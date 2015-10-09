@@ -1,0 +1,12 @@
+---
+HOSTS:
+  centos-7-x86:
+    platform: el-7-x86_64
+    hypervisor : docker
+    image: centos:7
+    docker_cmd: '["/sbin/init"]'
+    docker_image_commands:
+      - 'yum install -y locales rsync wget tar'
+CONFIG:
+  type: foss
+  log_level: debug
