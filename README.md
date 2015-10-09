@@ -34,22 +34,21 @@ The module is designed with the flexibility to define users in multiple ways:
 
 ### What users affects
 
-* System user management files and directories.
+* Users on the system.
+* Packages on the system.
 * User home directories and files.
- * Specifically user SSH directories and files.
+    * User SSH directories and files.
+    * User configuration files.
 
 ### Beginning with users
 
-To use the added functionality of the module at its minimum something like this will get you started:
+To start managing a systems users:
 
 ```puppet
-users::account { 'bob':
-  ssh_key_pair         => {
-    'test-rsa' => {
-      key_name        => 'rsa',
-      public_content  => 'Public_key_content',
-      private_content => 'Private_key_content',
-    },
+class { 'users':
+  hash => {
+    'alice' => { 'ensure' => 'present' },
+    'bob'   => { 'ensure' => 'present' },
   },
 }
 ```
