@@ -2,29 +2,33 @@
 
 #### Table of Contents
 
-1. [Overview](#overview)
-2. [Module Description](#module-description)
-3. [Setup](#setup)
+1. [Module Description](#module-description)
+2. [Setup](#setup)
     * [What users affects](#what-users-affects)
     * [Beginning with users](#beginning-with-users)
-4. [Usage](#usage)
-5. [Reference](#reference)
+3. [Usage](#usage)
+4. [Reference](#reference)
     * [Classes](#classes)
     * [Defined Types](#defined-types)
-5. [Limitations](#limitations)
-6. [Development](#development)
-
-## Overview
-
-Puppet module that handles user account management with support for virtual users and hiera.
+4. [Limitations](#limitations)
+5. [Development](#development)
 
 ## Module Description
 
-This module is intended to be an addition to the puppet built-in user type:
+This module offers comprehensive user management.  It is designed to provide a single interface for common user management tasks.  So far this includes:
 
-* It adds features to better support management of normal users in addition to system users by implementing an account class.
-* Support is provided to handle virtual user declaration, helping to keep all users across you puppet project in a consistent and easily realizable state.
-* Both declaration of data by a traditional manifest as well as via hiera are both supported.
+* SSH authorized key management.
+* SSH public and private key management.
+* User specific configuration file management.
+* User related packages installation.
+
+The module is designed with the flexibility to define users in multiple ways:
+
+* Individually, by defining `users:account` resources.
+* Collectively, by passing all users and settings as a hash.  This can be accomplish in multiple ways:
+    * Simply passing the users hash to the main `users` class will immediately instantiate the users accounts.
+    * Passing the users hash to the `users::virtual` class will create virtual users accounts that can then be realized in other parts of your project.
+    * Defining the users hash (either virtually or not) in Hiera.
 
 ## Setup
 
