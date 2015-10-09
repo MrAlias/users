@@ -4,8 +4,14 @@ require 'beaker-rspec'
 UNSUPPORTED_PLATFORMS = []
 
 hosts.each do |host|
-  create_remote_file host, '/etc/locale.gen', 'en_US.UTF-8 UTF-8'
-  shell 'locale-gen'
+  if host['platform'] =~ /el-(5|6|7)/
+    host.install_package('epel-release')
+    shell 'localedef --quiet -c -i en_US -f UTF-8 en_US.UTF-8'
+  else
+    create_remote_file host, '/etc/locale.gen', 'en_US.UTF-8 UTF-8'
+    shell 'locale-gen'
+  end
+
   host.add_env_var('LANG', 'en_US.UTF-8')
   host.add_env_var('LANGUAGE', 'en_US.UTF-8')
   host.add_env_var('LC_ALL', 'en_US.UTF-8')
