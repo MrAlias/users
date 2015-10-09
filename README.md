@@ -359,3 +359,7 @@ This module currently only receives testing on the following operating systems:
 * CentOS (5,6,7)
 
 This module will likely work on many other Linux distributions, but no grantees are made.
+
+## Development
+
+See [CONTRIBUTING.md](https://github.com/MrAlias/users/blob/master/CONTRIBUTING.md)
