@@ -55,63 +55,165 @@ class { 'users':
 
 ## Usage
 
-### Create multiple users
+### Create custom users
 
-If you want to create multiple user accounts, you can supply a hash with all the values:
+The full capability of the built-in puppet `user` resource are accessible, which mean you can create as complex of users as you could with the original resource.
 
 ```puppet
 class { 'users':
   hash => {
-    'bob'   => { 'ensure' => 'present' },
-    'sandy' => { 'ensure' => 'present' },
+    'alice' => {
+      'ensure'           => 'present',
+      'allowdupe'        => true,
+      'comment'          => 'Alice from accounting',
+      'expiry'           => '3000-01-01',
+      'forcelocal'       => false,
+      'uid'              => 10001,
+      'gid'              => 10001,
+      'home'             => '/mnt/homes/alice',
+      'managehome'       => true,
+      'password'         => '*',
+      'password_max_age' => 100,
+      'password_min_age' => 1,
+      'purge_ssh_keys'   => true,
+    },
+    'timer'   => {
+      'ensure'          => 'present'
+      'comment'         => 'Custom time keeper',
+      'uid'             => 672,
+      'gid'             => 672,
+      'home'            => '/var/timer',
+      'managehome'      => true,
+      'purge_ssh_keys'  => true,
+      'shell'           => '/usr/sbin/nologin',
+      'system'          => true,
+    },
   }
 }
 ```
 
-This can also be done with hiera by adding the following to file in your hiera hierarchy:
+### Create multiple users in different states
 
-```yaml
-users::hash:
-  bob:
-    ensure: present
-  sandy:
-    ensure: present
-```
-
-Once you have your user data setup in hiera, all that is needed is to include the users class.
+Users can be defined as `present` or `absent`, the same way the native puppet resource allows.
 
 ```puppet
-class { 'users': }
+class { 'users':
+  hash => {
+    'alice' => { 'ensure' => 'present' },
+    'bob'   => { 'ensure' => 'present' },
+    'carl'  => { 'ensure' => 'absent' },
+  }
+}
 ```
 
+This will ensure that `alice` and `bob` exist, but `carl` and all of his belongings (i.e. home directory, SSH keys, config files, ...) are removed.
 
 ### Create multiple virtual users
 
-Creating virtual users allows you define users once for an entire project.
+Just like with the native puppet resource, users can be created as virtual resources.  This allows you to only realize the users that you need on specific nodes.
 
 ```puppet
 class { 'users::virtual':
   hash => {
+    'alice' => { 'ensure' => 'present' },
     'bob'   => { 'ensure' => 'present' },
-    'sandy' => { 'ensure' => 'present' },
   }
 }
 ```
 
-Or again if you want to do this hiera:
+### Create user with custom GID and UID
 
-```yaml
-users::virtual::hash:
-  bob:
-    ensure: present
-  sandy:
-    ensure: present
-```
-
-Once your virtual users are setup all you need to do is realize them wherever the project requires them:
+In addition to being able to define a user's GID like the native puppet resource, this module will automatically ensure that the group exists before instantiating the user.
 
 ```puppet
-realize( Users:Account['sandy'] )
+class { 'users':
+  hash => {
+    'alice' => {
+      'ensure' => 'present'
+      'uid'    => 12345,
+      'gid'    => 12345,
+    },
+  }
+}
+```
+
+This will create a user `alice` with UID `12345` and GID `12345`, but before it does so it will make sure that there is a group named `alice` with GID `12345`.
+
+### Create user and setup SSH authorized keys
+
+A common user management task is to ensure a user has the correct SSH access.
+
+```puppet
+class { 'users':
+  hash => {
+    'alice' => {
+      'authorized_keys'  => {
+        'work-dsa-key' => {
+          'type' => 'dsa',
+          'key'  => 'WORKDSAPUBLICKEY',
+        },
+        'home-rsa-key' => {
+          'type' => 'rsa',
+          'key'  => 'HOMERSAPUBLICKEY',
+        },
+      },
+    },
+  }
+}
+```
+
+This example ensures that the `alice` user has both her home and work SSH keys setup on the system so she can access it remotely.
+
+### Create user and setup SSH private and public key pairs
+
+There are cases where certain users need SSH keys installed on the remote system.  In this case it is a better idea to define them in hiera and use an encrytion method (i.e. using the [hiera-eyaml](https://github.com/TomPoulton/hiera-eyaml) gem).
+
+```yaml
+---
+...
+users::hash:
+  alice:
+    ...
+    ssh_key_pair:
+      dev-rsa:
+        key_name: 'rsa'
+        public_content: 'PUBLICKEYCONTENT'
+        private_content: ENC[PKCS7,ENCRYPTEDPUBLICKEYCONTENT...]
+```
+
+### Adding packages for a particular user
+
+Some times users can be particular in what packages they will need.  Each user definition allows for custom packages to be installed for that user.
+
+```puppet
+class { 'users':
+  hash => {
+    'alice' => { 'packages' => ['tmux', 'less'] },
+    'bob'   => { 'packages' => ['screen', 'more'] },
+  }
+}
+```
+
+### Setting up configuration files for users
+
+Configuration files can be defined as a normal puppet `file` resource would be.
+
+```puppet
+class { 'users':
+  hash => {
+    'alice' => {
+      'packages' => ['tmux', 'less']
+      'config_files' => {
+        '/home/alice/.tmuxrc' => {
+          'content' => 'set-window-option -g xterm-keys on'
+        },
+        '/home/alice/.lessrc' => {
+          'content' => '-RS'
+        },
+      },
+    },
+  }
+}
 ```
 
 ## Reference
