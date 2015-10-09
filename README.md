@@ -224,7 +224,7 @@ class { 'users':
 
 Creates all the specified user accounts using the `users::account` resource.
 
-##### `hash`
+##### `users::hash`
 
 Hash of all user accounts. Each user should be a key and all corresponding account values are the associated hash value.
 
@@ -232,7 +232,7 @@ Hash of all user accounts. Each user should be a key and all corresponding accou
 
 Defines all the specified virtual user accounts using the `users::acount` resource.
 
-##### `hash`
+##### `users::virtual::hash`
 
 Hash of all virtual user accounts. Each virtual user should be a key and all corresponding account values are the associated hash value.
 
@@ -242,169 +242,169 @@ Hash of all virtual user accounts. Each virtual user should be a key and all cor
 
 Creates a customized user account that expands upon the built-in puppet `user` type.
 
-##### `ensure`
+##### `users::account::ensure`
 
    The state that the account should be in. 
 
    Valid values are `present` and `absent`.
 
-##### `allowdupe`
+##### `users::account::allowdupe`
 
    Value passed to the puppet built-in user type.
 
    The default value is `false`.
 
-##### `attribute_membership`
+##### `users::account::attribute_membership`
 
    Value passed to the puppet built-in user type.
 
    The default value is `'minimum'`.
 
-##### `attributes`
+##### `users::account::attributes`
 
    Value passed to the puppet built-in user type.
 
-##### `auth_membership`
+##### `users::account::auth_membership`
 
    Value passed to the puppet built-in user type.
 
    The default value is `'minimum'`.
 
-##### `auths`
+##### `users::account::auths`
 
    Value passed to the puppet built-in user type.
 
-##### `comment`
+##### `users::account::comment`
 
    Value passed to the puppet built-in user type.
 
-##### `expiry`
+##### `users::account::expiry`
 
    Value passed to the puppet built-in user type.
 
-##### `forcelocal`
+##### `users::account::forcelocal`
 
    Value passed to the puppet built-in user type.
 
-##### `gid`
+##### `users::account::gid`
 
    Value passed to the puppet built-in user type.
 
-##### `groups`
+##### `users::account::groups`
 
    Value passed to the puppet built-in user type.
 
-##### `home`
+##### `users::account::home`
 
    Value passed to the puppet built-in user type.
 
    The default value is `"/home/${name}"`.
 
-##### `ia_load_module`
+##### `users::account::ia_load_module`
 
    Value passed to the puppet built-in user type.
 
-##### `iterations`
+##### `users::account::iterations`
 
    Value passed to the puppet built-in user type.
 
-##### `key_membership`
+##### `users::account::key_membership`
 
    Value passed to the puppet built-in user type.
 
-##### `keys`
+##### `users::account::keys`
 
    Value passed to the puppet built-in user type.
 
-##### `managehome`
+##### `users::account::managehome`
 
    Value passed to the puppet built-in user type.
 
    The default value is `true` unlike the default for the user type.
 
-##### `membership`
+##### `users::account::membership`
 
    Value passed to the puppet built-in user type.
 
    The default value is `'minimum'`.
 
-##### `password`
+##### `users::account::password`
 
    Value passed to the puppet built-in user type.
 
-##### `password_max_age`
+##### `users::account::password_max_age`
 
    Value passed to the puppet built-in user type.
 
-##### `password_min_age`
+##### `users::account::password_min_age`
 
    Value passed to the puppet built-in user type.
 
-##### `profile_membership`
+##### `users::account::profile_membership`
 
    Value passed to the puppet built-in user type.
 
    The default value is `'minimum'`.
 
-##### `profiles`
+##### `users::account::profiles`
 
    Value passed to the puppet built-in user type.
 
-##### `project`
+##### `users::account::project`
 
    Value passed to the puppet built-in user type.
 
-##### `provider`
+##### `users::account::provider`
 
    Value passed to the puppet built-in user type.
 
-##### `purge_ssh_keys`
+##### `users::account::purge_ssh_keys`
 
    Value passed to the puppet built-in user type.
 
    The default value is `false`.
 
-##### `role_membership`
+##### `users::account::role_membership`
 
    Value passed to the puppet built-in user type.
 
    The default value is `'minimum'`.
 
-##### `roles`
+##### `users::account::roles`
 
    Value passed to the puppet built-in user type.
 
-##### `salt`
+##### `users::account::salt`
 
    Value passed to the puppet built-in user type.
 
-##### `shell`
+##### `users::account::shell`
 
    Value passed to the puppet built-in user type.
 
-##### `system`
+##### `users::account::system`
 
    Value passed to the puppet built-in user type.
 
    The default value is `false`.
 
-##### `uid`
+##### `users::account::uid`
 
    UID of the user the account creates.
 
-##### `authorized_keys`
+##### `users::account::authorized_keys`
 
    Hash of all the SSH keys that user account will accept connections for.
 
-##### `ssh_key_pair`
+##### `users::account::ssh_key_pair`
 
    Hash of all the public and private ssh pairs to create and manage.
 
-##### `config_files`
+##### `users::account::config_files`
 
    Hash of all the account config files to create and manage.
 
-##### `packages`
+##### `users::account::packages`
 
   Array of all user needed packages to ensure are installed.
 
@@ -413,45 +413,45 @@ Creates a customized user account that expands upon the built-in puppet `user` t
 
 Creates SSH keys for authentication.
 
-##### `user`
+##### `users::ssh_key_pair::user`
 
  The existing user account in which the SSH key pair will be installed.  The user will be autorequired if managed by a `user` resource.
 
-##### `home`
+##### `users::ssh_key_pair::home`
 
  Home directory of the `user` where the .ssh directory for the SSH key pair to be installed in exists.
 
  Default value is `'/home/$user'`.
 
-##### `key_name`
+##### `users::ssh_key_pair::key_name`
 
  (*Namevar*: If omitted, the value of this attribute defaults to the resource's title)
 
  Base name of the key pair.  The private key will have this name and the public key will have a suffix of .pub appended to this.
 
-##### `ensure`
+##### `users::ssh_key_pair::ensure`
 
  Set the state of the key pair on the system.
 
  Default value is `present`.
 
-##### `group`
+##### `users::ssh_key_pair::group`
 
  Group that will own of the key pair files.
 
-##### `private_source`
+##### `users::ssh_key_pair::private_source`
 
  The puppet URI locating the private ssh key file. This cannot be defined along with `private_content`.
 
-##### `private_content`
+##### `users::ssh_key_pair::private_content`
 
  The contents of the private ssh key file. This cannot be defined along with `private_source`.
 
-##### `public_source`
+##### `users::ssh_key_pair::public_source`
 
  The puppet URI locating the public ssh key file. This cannot be defined along with `public_content`.
 
-##### `public_content`
+##### `users::ssh_key_pair::public_content`
 
  The contents of the public ssh key file. This cannot be defined along with `public_source`.
 
