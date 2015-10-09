@@ -320,7 +320,7 @@ Creates SSH keys for authentication.
 
 ##### `key_name`
 
- (*Namevar*: If omitted, this attribute's value defaults to the resource's title)
+ (*Namevar*: If omitted, the value of this attribute defaults to the resource's title)
 
  Base name of the key pair.  The private key will have this name and the public key will have a suffix of .pub appended to this.
 
@@ -352,4 +352,10 @@ Creates SSH keys for authentication.
 
 ## Limitations
 
-This module has only been tested on Debian and CentOS.
+This module currently only receives testing on the following operating systems:
+
+* Debian (5,6,7)
+* Ubuntu (12.04,14.04)
+* CentOS (5,6,7)
+
+This module will likely work on many other Linux distributions, but no grantees are made.
